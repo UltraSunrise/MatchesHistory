@@ -1,6 +1,6 @@
 ﻿namespace MatchesHistory.Models.Interfacecs
 {
-    interface ICalculatePerformance
+    interface ICalculatePerformanceService
     {
         void UpdatePlayerInfo(long accountId);
     }
