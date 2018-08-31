@@ -5,7 +5,7 @@
     using MatchesHistory.Services.DatabaseServices;
     using System.Linq;
 
-    public class CalculatePerformance : ICalculatePerformance
+    public class CalculatePerformanceService : ICalculatePerformanceService
     {
         IDatabaseService dbService = new DatabaseService();
         private readonly string PRIVATE_ACCOUNT = "4294967295";
