@@ -108,6 +108,8 @@
 
                     db.Entry(entity).CurrentValues.SetValues(player);
                 }
+                
+                db.SaveChanges();
             }
         }
     }

@@ -28,7 +28,7 @@ namespace MatchesHistory.Services.HistoryServices
         public void ConvertJSON()
         {
             int count = 0;
-            long tempId = 4075433928;
+            long tempId = 4092343465;
 
             HashSet<Result> results = new HashSet<Result>();
 
@@ -50,12 +50,12 @@ namespace MatchesHistory.Services.HistoryServices
 
                 if (responseData == ERROR_MESSAGE)
                 {
-                    tempId++;
+                    tempId--;
                     continue;
                 }
 
                 Result result = JsonConvert.DeserializeObject<RootObject>(responseData).Result;
-                tempId++;
+                tempId--;
 
                 if (allMatchesIds.Contains(result.MatchId))
                     continue;
