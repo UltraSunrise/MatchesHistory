@@ -11,5 +11,6 @@
         List<long> GetAllMatchesIds();
         List<Result> LastMonthResults();
         PlayerPerformance CurrentPlayer(long accountId);
+        void UpdatePlayerPerformance(PlayerPerformance player);
     }
 }

@@ -93,5 +93,22 @@
                         .FirstOrDefault(pp => pp.AccountId == accountId);
             }
         }
+
+        public void UpdatePlayerPerformance(PlayerPerformance player)
+        {
+            using (MatchesHistoryDbContext db = new MatchesHistoryDbContext())
+            {
+                if (db.PlayersPerformance.FirstOrDefault(p => p.AccountId == player.AccountId) == null)
+                {
+                    db.PlayersPerformance.Add(player);
+                }
+                else
+                {
+                    var entity = db.PlayersPerformance.FirstOrDefault(p => p.AccountId == player.AccountId);
+
+                    db.Entry(entity).CurrentValues.SetValues(player);
+                }
+            }
+        }
     }
 }

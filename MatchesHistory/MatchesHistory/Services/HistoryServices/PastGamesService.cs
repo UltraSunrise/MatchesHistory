@@ -5,6 +5,7 @@ namespace MatchesHistory.Services.HistoryServices
     using MatchesHistory.Data.JSONParsers.LastGamesParsers;
     using MatchesHistory.Models.Interfacecs;
     using MatchesHistory.Services.DatabaseServices;
+    using MatchesHistory.Services.PerfomanceCalculationServices;
     using Newtonsoft.Json;
     using System.Collections.Generic;
     using System.IO;
@@ -15,6 +16,7 @@ namespace MatchesHistory.Services.HistoryServices
     public class PastGamesService : IPastGamesService
     {
         private static IDatabaseService dbService = new DatabaseService();
+        private ICalculatePerformanceService calculationsService = new CalculatePerformanceService();
         private AutoResetEvent waitForConnection = new AutoResetEvent(false);
 
         private readonly string ERROR_MESSAGE = "{\n\"result\":{\n\"error\":\"Match ID not found\"\n}\n}";
@@ -63,6 +65,9 @@ namespace MatchesHistory.Services.HistoryServices
 
                 results.Add(result);
                 allMatchesIds.Add(result.MatchId);
+
+                SeedPlayerPerformance(result);
+
                 count++;
 
                 if (count > 350)
@@ -139,9 +144,32 @@ namespace MatchesHistory.Services.HistoryServices
                 
                 results.Add(result);
                 allMatchesIds.Add(result.MatchId);
+                SeedPlayerPerformance(result);
             }
 
             dbService.AddRangeJSONToDatabase(results);
+        }
+
+        private List<long> AccoundIds(Result result)
+        {
+            List<long> accountIds = new List<long>();
+
+            foreach (var player in result.Players)
+            {
+                accountIds.Add(player.AccountId);
+            }
+
+            return accountIds;
+        }
+
+        private void SeedPlayerPerformance(Result result)
+        {
+            List<long> accountIds = AccoundIds(result);
+
+            foreach (var accountId in accountIds)
+            {
+                calculationsService.UpdatePlayerInfo(accountId, result);
+            }
         }
     }
 }
