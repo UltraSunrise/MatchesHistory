@@ -45,8 +45,24 @@
                 }
                 matchesIds.Sort();
 
-                return matchesIds.FirstOrDefault();
+                return matchesIds.LastOrDefault();
             }
         }
+
+        public List<long> GetAllMatchesIds()
+        {
+            using (MatchesHistoryDbContext db = new MatchesHistoryDbContext())
+            {
+                List<long> allMatchesIds = new List<long>();
+
+                foreach (var result in db.Results)
+                {
+                    allMatchesIds.Add(result.MatchId);
+                }
+
+                return allMatchesIds;
+            }
+        }
+
     }
 }

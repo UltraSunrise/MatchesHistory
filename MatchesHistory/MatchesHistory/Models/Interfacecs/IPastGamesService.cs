@@ -1,9 +1,10 @@
 ﻿namespace MatchesHistory.Models.Interfacecs
 {
-    using System.Threading.Tasks;
+    using System.Collections.Generic;
 
     interface IPastGamesService
     {
-        void ReadXMLAsync();
+        void ConvertJSON();
+        void LastPlayedGames();
     }
 }

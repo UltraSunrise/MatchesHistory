@@ -2,6 +2,7 @@
 {
     using MatchesHistory.Models.Interfacecs;
     using MatchesHistory.Services.HistoryServices;
+    using System.Threading.Tasks;
 
     public class Program
     {
@@ -9,7 +10,10 @@
         {
             IPastGamesService read = new PastGamesService();
 
-            read.ReadXMLAsync();
+            var task1 = Task.Factory.StartNew(() => read.ConvertJSON());
+            var task2 = Task.Factory.StartNew(() => read.LastPlayedGames());
+
+            Task.WaitAll(task1, task2);
         }
     }
 }

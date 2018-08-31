@@ -8,5 +8,6 @@
         void AddJSONToDatabase(Result result);
         void AddRangeJSONToDatabase(HashSet<Result> results);
         long GetLastAddedMatch();
+        List<long> GetAllMatchesIds();
     }
 }
