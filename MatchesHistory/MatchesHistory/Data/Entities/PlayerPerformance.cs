@@ -9,6 +9,8 @@
         public string Nickname { get; set; }
         public long GamesPlayedLastMonth { get; set; }
         public long GamesPlayedLastSixMonths { get; set; }
+        public long Wins { get; set; }
+        public long Losses { get; set; }
         public decimal WinRateLastMonth { get; set; }
         public decimal WinRateLastSixMonths { get; set; }
         public long MostPickedHeroLastMonth1 { get; set; }

@@ -83,5 +83,15 @@
                 return results;
             }
         }
+
+        public PlayerPerformance CurrentPlayer(long accountId)
+        {
+            using (MatchesHistoryDbContext db = new MatchesHistoryDbContext())
+            {
+                return db
+                        .PlayersPerformance
+                        .FirstOrDefault(pp => pp.AccountId == accountId);
+            }
+        }
     }
 }
