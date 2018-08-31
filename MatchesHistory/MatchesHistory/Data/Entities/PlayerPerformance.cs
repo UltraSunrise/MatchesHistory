@@ -1,5 +1,7 @@
 ﻿namespace MatchesHistory.Data.Entities
 {
+    using System.Collections.Generic;
+
     public class PlayerPerformance
     {
         public int Id { get; set; }
@@ -24,5 +26,6 @@
         public long HeroWithTheBestWinRate1 { get; set; }
         public long HeroWithTheBestWinRate2 { get; set; }
         public long HeroWithTheBestWinRate3 { get; set; }
+        public List<PlayedHeroes> PlayedHeroes { get; set; } = new List<PlayedHeroes>();
     }
 }
