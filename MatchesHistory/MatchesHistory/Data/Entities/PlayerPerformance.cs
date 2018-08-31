@@ -3,6 +3,7 @@
     public class PlayerPerformance
     {
         public int Id { get; set; }
+        public long AccountId { get; set; }
         public string Nickname { get; set; }
         public long GamesPlayedLastMonth { get; set; }
         public long GamesPlayedLastSixMonths { get; set; }
