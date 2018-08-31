@@ -3,6 +3,8 @@
     using MatchesHistory.Data;
     using MatchesHistory.Data.Entities;
     using MatchesHistory.Models.Interfacecs;
+    using Microsoft.EntityFrameworkCore;
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -64,5 +66,22 @@
             }
         }
 
+        public List<Result> LastMonthResults()
+        {
+            using (MatchesHistoryDbContext db = new MatchesHistoryDbContext())
+            {
+                List<Result> results = new List<Result>();
+
+                long startTime = DateTime.Now.Millisecond;
+
+                results = db
+                            .Results
+                            .Where(r => r.StartTime > startTime)
+                            .Include(r => r.Players)
+                            .ToList();
+
+                return results;
+            }
+        }
     }
 }

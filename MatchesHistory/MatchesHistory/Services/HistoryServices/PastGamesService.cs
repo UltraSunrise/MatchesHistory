@@ -26,11 +26,11 @@ namespace MatchesHistory.Services.HistoryServices
         public void ConvertJSON()
         {
             int count = 0;
-            long tempId = 4075427301;
+            long tempId = 4075433928;
 
             HashSet<Result> results = new HashSet<Result>();
 
-            while (tempId < 4091675247)
+            while (true)
             {
                 WebResponse response;
                 WebRequest request = WebRequest.Create(string.Format(EXACT_MATCH_URL, tempId, STEAM_KEY));

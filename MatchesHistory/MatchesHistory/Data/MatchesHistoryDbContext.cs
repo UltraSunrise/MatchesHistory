@@ -8,6 +8,7 @@
         public DbSet<Result> Results { get; set; }
         public DbSet<Player> Players { get; set; }
         public DbSet<Ability> Abilities { get; set; }
+        public DbSet<PlayerPerformance> PlayersPerformance { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

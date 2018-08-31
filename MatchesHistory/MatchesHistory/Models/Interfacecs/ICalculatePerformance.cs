@@ -2,6 +2,6 @@
 {
     interface ICalculatePerformance
     {
-
+        void UpdatePlayerInfo(long accountId);
     }
 }

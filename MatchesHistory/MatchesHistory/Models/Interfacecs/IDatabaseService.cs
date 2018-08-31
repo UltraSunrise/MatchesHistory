@@ -9,5 +9,6 @@
         void AddRangeJSONToDatabase(HashSet<Result> results);
         long GetLastAddedMatch();
         List<long> GetAllMatchesIds();
+        List<Result> LastMonthResults();
     }
 }
