@@ -16,6 +16,8 @@
 
             var results = dbServide.LastMonthResults();
 
+
+
             foreach (var result in results.Where(r => r.Players.Any(p => p.AccountId == accountId)))
             {
 
