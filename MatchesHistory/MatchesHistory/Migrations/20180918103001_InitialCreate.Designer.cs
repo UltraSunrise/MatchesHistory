@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MatchesHistory.Migrations
 {
     [DbContext(typeof(MatchesHistoryDbContext))]
-    [Migration("20180918080249_InitialCreate")]
+    [Migration("20180918103001_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -59,7 +59,7 @@ namespace MatchesHistory.Migrations
 
                     b.HasIndex("PlayerPerformanceId");
 
-                    b.ToTable("Loss");
+                    b.ToTable("Losses");
                 });
 
             modelBuilder.Entity("MatchesHistory.Data.Entities.PlayedHeroes", b =>
@@ -244,7 +244,7 @@ namespace MatchesHistory.Migrations
 
                     b.HasIndex("PlayerPerformanceId");
 
-                    b.ToTable("Win");
+                    b.ToTable("Wins");
                 });
 
             modelBuilder.Entity("MatchesHistory.Data.Entities.Ability", b =>

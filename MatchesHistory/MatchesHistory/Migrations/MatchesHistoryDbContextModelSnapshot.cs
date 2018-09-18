@@ -57,7 +57,7 @@ namespace MatchesHistory.Migrations
 
                     b.HasIndex("PlayerPerformanceId");
 
-                    b.ToTable("Loss");
+                    b.ToTable("Losses");
                 });
 
             modelBuilder.Entity("MatchesHistory.Data.Entities.PlayedHeroes", b =>
@@ -242,7 +242,7 @@ namespace MatchesHistory.Migrations
 
                     b.HasIndex("PlayerPerformanceId");
 
-                    b.ToTable("Win");
+                    b.ToTable("Wins");
                 });
 
             modelBuilder.Entity("MatchesHistory.Data.Entities.Ability", b =>

@@ -55,7 +55,7 @@ namespace MatchesHistory.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Loss",
+                name: "Losses",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -67,9 +67,9 @@ namespace MatchesHistory.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Loss", x => x.Id);
+                    table.PrimaryKey("PK_Losses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Loss_PlayersPerformance_PlayerPerformanceId",
+                        name: "FK_Losses_PlayersPerformance_PlayerPerformanceId",
                         column: x => x.PlayerPerformanceId,
                         principalTable: "PlayersPerformance",
                         principalColumn: "Id",
@@ -100,7 +100,7 @@ namespace MatchesHistory.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Win",
+                name: "Wins",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -112,9 +112,9 @@ namespace MatchesHistory.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Win", x => x.Id);
+                    table.PrimaryKey("PK_Wins", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Win_PlayersPerformance_PlayerPerformanceId",
+                        name: "FK_Wins_PlayersPerformance_PlayerPerformanceId",
                         column: x => x.PlayerPerformanceId,
                         principalTable: "PlayersPerformance",
                         principalColumn: "Id",
@@ -197,8 +197,8 @@ namespace MatchesHistory.Migrations
                 column: "PlayerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Loss_PlayerPerformanceId",
-                table: "Loss",
+                name: "IX_Losses_PlayerPerformanceId",
+                table: "Losses",
                 column: "PlayerPerformanceId");
 
             migrationBuilder.CreateIndex(
@@ -212,8 +212,8 @@ namespace MatchesHistory.Migrations
                 column: "ResultId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Win_PlayerPerformanceId",
-                table: "Win",
+                name: "IX_Wins_PlayerPerformanceId",
+                table: "Wins",
                 column: "PlayerPerformanceId");
         }
 
@@ -223,13 +223,13 @@ namespace MatchesHistory.Migrations
                 name: "Abilities");
 
             migrationBuilder.DropTable(
-                name: "Loss");
+                name: "Losses");
 
             migrationBuilder.DropTable(
                 name: "PlayedHeroes");
 
             migrationBuilder.DropTable(
-                name: "Win");
+                name: "Wins");
 
             migrationBuilder.DropTable(
                 name: "Players");

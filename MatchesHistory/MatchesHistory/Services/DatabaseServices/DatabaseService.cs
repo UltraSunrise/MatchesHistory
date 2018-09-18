@@ -114,29 +114,5 @@
                 db.SaveChanges();
             }
         }
-
-        public void AddWinToDatabase(Win currentWin)
-        {
-            using (MatchesHistoryDbContext db = new MatchesHistoryDbContext())
-            {
-                db
-                    .Wins
-                    .Add(currentWin);
-
-                db.SaveChanges();
-            }
-        }
-
-        public void AddLossToDatabase(Loss currentLoss)
-        {
-            using (MatchesHistoryDbContext db = new MatchesHistoryDbContext())
-            {
-                db
-                    .Losses
-                    .Add(currentLoss);
-
-                db.SaveChanges();
-            }
-        }
     }
 }

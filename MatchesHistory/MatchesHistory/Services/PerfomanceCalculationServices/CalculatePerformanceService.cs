@@ -40,8 +40,6 @@
                     StartTime = result.StartTime
                 };
 
-                dbService.AddWinToDatabase(currentWin);
-
                 currentPlayerPerformance.Wins.Add(currentWin);
             }
             else
@@ -52,8 +50,6 @@
                     HeroId = currentPlayer.HeroId,
                     StartTime = result.StartTime
                 };
-
-                dbService.AddLossToDatabase(currentLoss);
 
                 currentPlayerPerformance.Losses.Add(currentLoss);
             }

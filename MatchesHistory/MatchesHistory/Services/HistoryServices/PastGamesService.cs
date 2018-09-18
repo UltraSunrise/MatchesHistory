@@ -23,7 +23,7 @@ namespace MatchesHistory.Services.HistoryServices
         private readonly string STEAM_KEY = "771F6AEA67F1913B60DB7A66FFB3DE3C";
         private readonly string EXACT_MATCH_URL = @"https://api.steampowered.com/IDOTA2Match_570/GetMatchDetails/V001/?match_id={0}&key={1}";
         private readonly string LAST_MATCHES_URL = @"https://api.steampowered.com/IDOTA2Match_570/GetMatchHistory/V001/?matches_requested=100&key={0}";
-        private static List<long> allMatchesIds = dbService.GetAllMatchesIds();
+        private static List<long> allMatchesIds = dbService.GetAllMatchesIds() ?? new List<long>();
 
         public void ConvertJSON()
         {
