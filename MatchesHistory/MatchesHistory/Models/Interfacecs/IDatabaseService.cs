@@ -12,5 +12,7 @@
         List<Result> LastMonthResults();
         PlayerPerformance CurrentPlayer(long accountId);
         void UpdatePlayerPerformance(PlayerPerformance player);
+        void AddWinToDatabase(Win currentWin);
+        void AddLossToDatabase(Loss currentLoss);
     }
 }

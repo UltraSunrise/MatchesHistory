@@ -7,7 +7,7 @@
 
     public class CalculatePerformanceService : ICalculatePerformanceService
     {
-        IDatabaseService dbService = new DatabaseService();
+        private readonly IDatabaseService dbService = new DatabaseService();
         private readonly string PRIVATE_ACCOUNT = "4294967295";
 
         public void UpdatePlayerInfo(long accountId, Result result)
@@ -15,29 +15,62 @@
             if (accountId.ToString() == PRIVATE_ACCOUNT)
                 return;
 
-            PlayerPerformance currentPlayer = dbService.CurrentPlayer(accountId) == null ? new PlayerPerformance() : dbService.CurrentPlayer(accountId);
+            PlayerPerformance currentPlayerPerformance = dbService.CurrentPlayer(accountId);
 
-            Player player = result.Players.FirstOrDefault(p => p.AccountId == accountId);
+            if (currentPlayerPerformance == null)
+            {
+                currentPlayerPerformance = new PlayerPerformance {AccountId = accountId};
+            }
+
+            Player currentPlayer = result.Players.FirstOrDefault(p => p.AccountId == accountId);
 
             bool radiantWin = result.RadiantWin;
-
             bool isPlayerRadiant = result.Players.Take(5).FirstOrDefault(p => p.AccountId == accountId) != null;
 
+            bool isWin = false;
+
             if ((radiantWin && isPlayerRadiant) || (!radiantWin && isPlayerRadiant))
-                currentPlayer.Wins += 1;
-            else
-                currentPlayer.Losses += 1;
-
-            currentPlayer.PlayedHeroes.Add(new PlayedHeroes()
             {
-                HeroId = player.HeroId,
-                StartDate = result.StartTime
-            });
+                isWin = true;
 
-            currentPlayer.GamesPlayedLastMonth += 1;
-            currentPlayer.GamesPlayedLastSixMonths += 1;
+                Win currentWin = new Win()
+                {
+                    AccountId = accountId,
+                    HeroId = currentPlayer.HeroId,
+                    StartTime = result.StartTime
+                };
 
-            dbService.UpdatePlayerPerformance(currentPlayer);
+                dbService.AddWinToDatabase(currentWin);
+
+                currentPlayerPerformance.Wins.Add(currentWin);
+            }
+            else
+            {
+                Loss currentLoss = new Loss()
+                {
+                    AccountId = accountId,
+                    HeroId = currentPlayer.HeroId,
+                    StartTime = result.StartTime
+                };
+
+                dbService.AddLossToDatabase(currentLoss);
+
+                currentPlayerPerformance.Losses.Add(currentLoss);
+            }
+
+            PlayedHeroes playedHeroes = new PlayedHeroes()
+            {
+                AccountId = accountId,
+                HeroId = currentPlayer.HeroId,
+                IsWin = isWin,
+                StartTime = result.StartTime
+            };
+
+            currentPlayerPerformance
+                .PlayedHeroes
+                .Add(playedHeroes);
+
+            dbService.UpdatePlayerPerformance(currentPlayerPerformance);
         }
     }
 }

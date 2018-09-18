@@ -5,7 +5,7 @@ namespace MatchesHistory.Services.HistoryServices
     using MatchesHistory.Data.JSONParsers.LastGamesParsers;
     using MatchesHistory.Models.Interfacecs;
     using MatchesHistory.Services.DatabaseServices;
-    using MatchesHistory.Services.PerfomanceCalculationServices;
+    using PerfomanceCalculationServices;
     using Newtonsoft.Json;
     using System.Collections.Generic;
     using System.IO;
@@ -146,6 +146,7 @@ namespace MatchesHistory.Services.HistoryServices
                 allMatchesIds.Add(result.MatchId);
                 SeedPlayerPerformance(result);
             }
+            
 
             dbService.AddRangeJSONToDatabase(results);
         }

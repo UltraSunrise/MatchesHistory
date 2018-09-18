@@ -94,21 +94,47 @@
             }
         }
 
-        public void UpdatePlayerPerformance(PlayerPerformance player)
+        public void UpdatePlayerPerformance(PlayerPerformance playerPerformance)
         {
             using (MatchesHistoryDbContext db = new MatchesHistoryDbContext())
             {
-                if (db.PlayersPerformance.FirstOrDefault(p => p.AccountId == player.AccountId) == null)
+                if (db.PlayersPerformance.FirstOrDefault(p => p.AccountId == playerPerformance.AccountId) == null)
                 {
-                    db.PlayersPerformance.Add(player);
+                    db.PlayersPerformance.Add(playerPerformance);
                 }
                 else
                 {
-                    var entity = db.PlayersPerformance.FirstOrDefault(p => p.AccountId == player.AccountId);
-
-                    db.Entry(entity).CurrentValues.SetValues(player);
+                    var entity = db.PlayersPerformance.FirstOrDefault(p => p.AccountId == playerPerformance.AccountId);
+                    
+                    db.Remove(entity);
+                    db.SaveChanges();
+                    db.Add(playerPerformance);
                 }
                 
+                db.SaveChanges();
+            }
+        }
+
+        public void AddWinToDatabase(Win currentWin)
+        {
+            using (MatchesHistoryDbContext db = new MatchesHistoryDbContext())
+            {
+                db
+                    .Wins
+                    .Add(currentWin);
+
+                db.SaveChanges();
+            }
+        }
+
+        public void AddLossToDatabase(Loss currentLoss)
+        {
+            using (MatchesHistoryDbContext db = new MatchesHistoryDbContext())
+            {
+                db
+                    .Losses
+                    .Add(currentLoss);
+
                 db.SaveChanges();
             }
         }
