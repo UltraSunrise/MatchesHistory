@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MatchesHistory.Migrations
 {
-    public partial class AddedNewTable : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,26 +13,7 @@ namespace MatchesHistory.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Nickname = table.Column<string>(nullable: true),
-                    GamesPlayedLastMonth = table.Column<long>(nullable: false),
-                    GamesPlayedLastSixMonths = table.Column<long>(nullable: false),
-                    WinRateLastMonth = table.Column<decimal>(nullable: false),
-                    WinRateLastSixMonths = table.Column<decimal>(nullable: false),
-                    MostPickedHeroLastMonth1 = table.Column<long>(nullable: false),
-                    MostPickedHeroLastMonth2 = table.Column<long>(nullable: false),
-                    MostPickedHeroLastMonth3 = table.Column<long>(nullable: false),
-                    MostPickedHeroLastMonth4 = table.Column<long>(nullable: false),
-                    MostPickedHeroLastMonth5 = table.Column<long>(nullable: false),
-                    MostPickedHeroLastMonth6 = table.Column<long>(nullable: false),
-                    MostPickedHeroLastSixMonths1 = table.Column<long>(nullable: false),
-                    MostPickedHeroLastSixMonths2 = table.Column<long>(nullable: false),
-                    MostPickedHeroLastSixMonths3 = table.Column<long>(nullable: false),
-                    MostPickedHeroLastSixMonths4 = table.Column<long>(nullable: false),
-                    MostPickedHeroLastSixMonths5 = table.Column<long>(nullable: false),
-                    MostPickedHeroLastSixMonths6 = table.Column<long>(nullable: false),
-                    HeroWithTheBestWinRate1 = table.Column<long>(nullable: false),
-                    HeroWithTheBestWinRate2 = table.Column<long>(nullable: false),
-                    HeroWithTheBestWinRate3 = table.Column<long>(nullable: false)
+                    AccountId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -71,6 +52,73 @@ namespace MatchesHistory.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Results", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Loss",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    AccountId = table.Column<long>(nullable: false),
+                    HeroId = table.Column<long>(nullable: false),
+                    StartTime = table.Column<long>(nullable: false),
+                    PlayerPerformanceId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Loss", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Loss_PlayersPerformance_PlayerPerformanceId",
+                        column: x => x.PlayerPerformanceId,
+                        principalTable: "PlayersPerformance",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PlayedHeroes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    AccountId = table.Column<long>(nullable: false),
+                    HeroId = table.Column<long>(nullable: false),
+                    StartTime = table.Column<long>(nullable: false),
+                    IsWin = table.Column<bool>(nullable: false),
+                    PlayerPerformanceId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PlayedHeroes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PlayedHeroes_PlayersPerformance_PlayerPerformanceId",
+                        column: x => x.PlayerPerformanceId,
+                        principalTable: "PlayersPerformance",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Win",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    AccountId = table.Column<long>(nullable: false),
+                    HeroId = table.Column<long>(nullable: false),
+                    StartTime = table.Column<long>(nullable: false),
+                    PlayerPerformanceId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Win", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Win_PlayersPerformance_PlayerPerformanceId",
+                        column: x => x.PlayerPerformanceId,
+                        principalTable: "PlayersPerformance",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -149,9 +197,24 @@ namespace MatchesHistory.Migrations
                 column: "PlayerId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Loss_PlayerPerformanceId",
+                table: "Loss",
+                column: "PlayerPerformanceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlayedHeroes_PlayerPerformanceId",
+                table: "PlayedHeroes",
+                column: "PlayerPerformanceId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Players_ResultId",
                 table: "Players",
                 column: "ResultId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Win_PlayerPerformanceId",
+                table: "Win",
+                column: "PlayerPerformanceId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -160,10 +223,19 @@ namespace MatchesHistory.Migrations
                 name: "Abilities");
 
             migrationBuilder.DropTable(
-                name: "PlayersPerformance");
+                name: "Loss");
+
+            migrationBuilder.DropTable(
+                name: "PlayedHeroes");
+
+            migrationBuilder.DropTable(
+                name: "Win");
 
             migrationBuilder.DropTable(
                 name: "Players");
+
+            migrationBuilder.DropTable(
+                name: "PlayersPerformance");
 
             migrationBuilder.DropTable(
                 name: "Results");

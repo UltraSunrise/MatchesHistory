@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MatchesHistory.Migrations
 {
     [DbContext(typeof(MatchesHistoryDbContext))]
-    [Migration("20180831115046_ChangedPlayerPerformanceTable")]
-    partial class ChangedPlayerPerformanceTable
+    [Migration("20180918080249_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -41,17 +41,42 @@ namespace MatchesHistory.Migrations
                     b.ToTable("Abilities");
                 });
 
-            modelBuilder.Entity("MatchesHistory.Data.Entities.PlayedHeroes", b =>
+            modelBuilder.Entity("MatchesHistory.Data.Entities.Loss", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long>("AccountId");
 
                     b.Property<long>("HeroId");
 
                     b.Property<int>("PlayerPerformanceId");
 
-                    b.Property<long>("StartDate");
+                    b.Property<long>("StartTime");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PlayerPerformanceId");
+
+                    b.ToTable("Loss");
+                });
+
+            modelBuilder.Entity("MatchesHistory.Data.Entities.PlayedHeroes", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long>("AccountId");
+
+                    b.Property<long>("HeroId");
+
+                    b.Property<bool>("IsWin");
+
+                    b.Property<int>("PlayerPerformanceId");
+
+                    b.Property<long>("StartTime");
 
                     b.HasKey("Id");
 
@@ -141,50 +166,6 @@ namespace MatchesHistory.Migrations
 
                     b.Property<long>("AccountId");
 
-                    b.Property<long>("GamesPlayedLastMonth");
-
-                    b.Property<long>("GamesPlayedLastSixMonths");
-
-                    b.Property<long>("HeroWithTheBestWinRate1");
-
-                    b.Property<long>("HeroWithTheBestWinRate2");
-
-                    b.Property<long>("HeroWithTheBestWinRate3");
-
-                    b.Property<long>("Losses");
-
-                    b.Property<long>("MostPickedHeroLastMonth1");
-
-                    b.Property<long>("MostPickedHeroLastMonth2");
-
-                    b.Property<long>("MostPickedHeroLastMonth3");
-
-                    b.Property<long>("MostPickedHeroLastMonth4");
-
-                    b.Property<long>("MostPickedHeroLastMonth5");
-
-                    b.Property<long>("MostPickedHeroLastMonth6");
-
-                    b.Property<long>("MostPickedHeroLastSixMonths1");
-
-                    b.Property<long>("MostPickedHeroLastSixMonths2");
-
-                    b.Property<long>("MostPickedHeroLastSixMonths3");
-
-                    b.Property<long>("MostPickedHeroLastSixMonths4");
-
-                    b.Property<long>("MostPickedHeroLastSixMonths5");
-
-                    b.Property<long>("MostPickedHeroLastSixMonths6");
-
-                    b.Property<string>("Nickname");
-
-                    b.Property<decimal>("WinRateLastMonth");
-
-                    b.Property<decimal>("WinRateLastSixMonths");
-
-                    b.Property<long>("Wins");
-
                     b.HasKey("Id");
 
                     b.ToTable("PlayersPerformance");
@@ -245,11 +226,40 @@ namespace MatchesHistory.Migrations
                     b.ToTable("Results");
                 });
 
+            modelBuilder.Entity("MatchesHistory.Data.Entities.Win", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long>("AccountId");
+
+                    b.Property<long>("HeroId");
+
+                    b.Property<int>("PlayerPerformanceId");
+
+                    b.Property<long>("StartTime");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PlayerPerformanceId");
+
+                    b.ToTable("Win");
+                });
+
             modelBuilder.Entity("MatchesHistory.Data.Entities.Ability", b =>
                 {
                     b.HasOne("MatchesHistory.Data.Entities.Player", "Player")
                         .WithMany("Abilities")
                         .HasForeignKey("PlayerId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("MatchesHistory.Data.Entities.Loss", b =>
+                {
+                    b.HasOne("MatchesHistory.Data.Entities.PlayerPerformance", "PlayerPerformance")
+                        .WithMany("Losses")
+                        .HasForeignKey("PlayerPerformanceId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -266,6 +276,14 @@ namespace MatchesHistory.Migrations
                     b.HasOne("MatchesHistory.Data.Entities.Result", "Result")
                         .WithMany("Players")
                         .HasForeignKey("ResultId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("MatchesHistory.Data.Entities.Win", b =>
+                {
+                    b.HasOne("MatchesHistory.Data.Entities.PlayerPerformance", "PlayerPerformance")
+                        .WithMany("Wins")
+                        .HasForeignKey("PlayerPerformanceId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
