@@ -10,6 +10,8 @@
         public DbSet<Ability> Abilities { get; set; }
         public DbSet<PlayerPerformance> PlayersPerformance { get; set; }
         public DbSet<PlayedHeroes> PlayedHeroes { get; set; }
+        public DbSet<Win> Wins { get; set; }
+        public DbSet<Loss> Losses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -30,8 +32,19 @@
                 .HasMany(pp => pp.PlayedHeroes)
                 .WithOne(ph => ph.PlayerPerformance)
                 .HasForeignKey(ph => ph.PlayerPerformanceId);
-                
 
+            builder
+                .Entity<Win>()
+                .HasOne(w => w.PlayerPerformance)
+                .WithMany(pp => pp.Wins)
+                .HasForeignKey(w => w.PlayerPerformanceId);
+
+            builder
+                .Entity<Loss>()
+                .HasOne(l => l.PlayerPerformance)
+                .WithMany(pp => pp.Losses)
+                .HasForeignKey(l => l.PlayerPerformanceId);
+                
             base.OnModelCreating(builder);
         }
 
