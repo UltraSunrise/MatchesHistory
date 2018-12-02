@@ -5,9 +5,11 @@
 
     interface IDatabaseService
     {
+        void AddJSONToDatabase(Result result);
         void AddRangeJSONToDatabase(HashSet<Result> results);
         List<long> GetAllMatchesIds();
         PlayerPerformance CurrentPlayer(long accountId);
         void UpdatePlayerPerformance(PlayerPerformance player);
+        long GetLastAddedMatch();
     }
 }

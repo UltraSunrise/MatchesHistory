@@ -104,11 +104,7 @@
                 }
                 else
                 {
-                    var entity = db.PlayersPerformance.FirstOrDefault(p => p.AccountId == playerPerformance.AccountId);
-                    
-                    db.Remove(entity);
-                    db.SaveChanges();
-                    db.Add(playerPerformance);
+                    var entity = playerPerformance;
                 }
                 
                 db.SaveChanges();

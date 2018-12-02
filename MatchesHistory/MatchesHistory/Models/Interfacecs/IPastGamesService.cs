@@ -4,7 +4,6 @@
 
     interface IPastGamesService
     {
-        void ConvertJSON();
-        void LastPlayedGames();
+        void ConvertJSON(long tempId);
     }
 }
