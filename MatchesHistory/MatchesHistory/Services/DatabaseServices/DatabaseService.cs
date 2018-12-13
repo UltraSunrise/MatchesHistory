@@ -106,7 +106,7 @@
                 {
                     var entity = playerPerformance;
                 }
-                
+
                 db.SaveChanges();
             }
         }

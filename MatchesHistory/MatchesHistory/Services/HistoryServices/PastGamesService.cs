@@ -42,12 +42,12 @@ namespace MatchesHistory.Services.HistoryServices
 
                 if (responseData == ERROR_MESSAGE)
                 {
-                    tempId+=10;
+                    tempId+=5;
                     continue;
                 }
 
                 Result result = JsonConvert.DeserializeObject<RootObject>(responseData).Result;
-                tempId+=10;
+                tempId+=5;
 
                 if (result.Duration < 360 || result.LobbyType != 7)
                     continue;

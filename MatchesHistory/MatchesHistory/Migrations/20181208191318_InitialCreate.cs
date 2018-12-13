@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MatchesHistory.Migrations
@@ -7,6 +8,48 @@ namespace MatchesHistory.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Heroes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    HeroId = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    ImageFull = table.Column<byte[]>(nullable: true),
+                    ImageOver = table.Column<byte[]>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Heroes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ImagesFull",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    HeroImageFull = table.Column<byte[]>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ImagesFull", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ImagesOver",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    HeroOverImage = table.Column<byte[]>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ImagesOver", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "PlayersPerformance",
                 columns: table => new
@@ -221,6 +264,15 @@ namespace MatchesHistory.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Abilities");
+
+            migrationBuilder.DropTable(
+                name: "Heroes");
+
+            migrationBuilder.DropTable(
+                name: "ImagesFull");
+
+            migrationBuilder.DropTable(
+                name: "ImagesOver");
 
             migrationBuilder.DropTable(
                 name: "Losses");

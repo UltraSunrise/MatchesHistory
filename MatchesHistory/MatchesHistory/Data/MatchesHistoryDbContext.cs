@@ -6,6 +6,7 @@ namespace MatchesHistory.Data
 {
     using MatchesHistory.Data.Entities;
     using Microsoft.EntityFrameworkCore;
+    using System;
 
     public class MatchesHistoryDbContext : DbContext
     {
@@ -19,7 +20,7 @@ namespace MatchesHistory.Data
         public DbSet<ImageFull> ImagesFull {get; set;}
         public DbSet<ImageOver> ImagesOver { get; set; }
         public DbSet<Hero> Heroes { get; set; }
-
+        
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder
@@ -58,7 +59,10 @@ namespace MatchesHistory.Data
     protected override void OnConfiguring(DbContextOptionsBuilder builder)
     {
         builder
-            .UseSqlServer("Server=.;Database=SomeDotes;Trusted_Connection=true");
+            .UseSqlServer("Server=.;Database=SomeDotes2;Trusted_Connection=true", temp =>
+                                                                                {
+                                                                                    temp.EnableRetryOnFailure(10, TimeSpan.FromSeconds(0.5), null);
+                                                                                });
 
         base.OnConfiguring(builder);
     }
